@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="css/custom.css"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <script type="text/javascript" src="js/custom.js"></script>
+    <!---script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.0.0-beta.34/dist/web3.js"></script -->
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.2.6/dist/web3.min.js"></script>
+
+</head>
+<body>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+
+        if (typeof web3 !== 'undefined') {
+            web3 = new Web3(web3.currentProvider);
+        } else {
+            // set the provider you want from Web3.providers
+            web3 = new Web3(new Web3.providers.HttpProvider("http://ioet.thomasrob.in:8080"));
+        }
+        web3.eth.defaultAccount = web3.eth.accounts[0];
+
+        var rpds = new web3.eth.Contract([
+          {
+            "inputs": [],
+            "name": "incrementCounter",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+          },
+          {
+            "inputs": [],
+            "name": "decrementCounter",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+          },
+          {
+            "inputs": [],
+            "name": "getCount",
+            "outputs": [
+              {
+                "internalType": "int256",
+                "name": "",
+                "type": "int256"
+              }
+            ],
+            "stateMutability": "view",
+            "type": "function",
+            "constant": true
+          }
+        ], '0xaF883f51424032aB562044A4A99F045Ad553D77F');
+        var version = web3.version; // "1.0.0"
+        console.log(version);
+
+
+
+        rpds.methods.getCount().call({from: '0xe04078F48A7DfAc7a65De40c6bD053079f0814eD'}, function(error, result){
+
+            if(!error) {
+                console.log(result);     //console.log(JSON.stringify(result));
+                
+            }
+            else
+                console.error(error);
+        });
+
+    });
+
+
+
+</script>
+
+</body>
+</html>
+
